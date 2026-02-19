@@ -27,11 +27,15 @@ export function shuffleDeck(deck: string[]): string[] {
 }
 
 export function getCardValue(cardId: string): number {
-    const rank = cardId.split('-')[1] as Rank;
-    return VALUES[rank];
+    if (!cardId) return 0;
+    const parts = cardId.split('-');
+    if (parts.length < 2) return 0;
+    const rank = parts[1] as Rank;
+    return VALUES[rank] || 0;
 }
 
 export function getCardSuit(cardId: string): Suit {
+    if (!cardId) return 'spades'; // Default fallback safely
     return cardId.split('-')[0] as Suit;
 }
 

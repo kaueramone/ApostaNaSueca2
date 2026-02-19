@@ -441,7 +441,7 @@ export function GameTable({ game, currentUser, isTraining = false }: { game?: an
                     )}
                 </div>
                 {/* Fixed Hand Count */}
-                <div className="flex -space-x-8 sm:-space-x-10 h-20 items-start">
+                <div className="flex -space-x-[50px] sm:-space-x-[70px] h-20 items-start">
                     {getOpponentCards(gameState.game_players[2]).map(i => (
                         <div key={i} className="transform scale-75 origin-top">{renderCardBack()}</div>
                     ))}
@@ -457,18 +457,19 @@ export function GameTable({ game, currentUser, isTraining = false }: { game?: an
                         <div className="w-full h-full flex items-center justify-center text-xs text-white">Bot</div>
                     )}
                 </div>
-                <div className="flex flex-col -space-y-12 sm:-space-y-14">
+                {/* Lateral stacking deck effect */}
+                <div className="flex flex-col -space-y-[60px] sm:-space-y-[80px]">
                     {getOpponentCards(gameState.game_players[1]).map(i => (
-                        <div key={i} className="transform -rotate-90 scale-75">{renderCardBack()}</div>
+                        <div key={i} className="transform -rotate-90 scale-75 shadow-sm">{renderCardBack()}</div>
                     ))}
                 </div>
             </div>
 
             {/* Right Player (Opponent) - CORRECTED LAYOUT: Cards on Left (Center), Avatar on Right (Edge) */}
             <div className="absolute right-4 sm:right-[5%] top-1/2 -translate-y-1/2 flex flex-row items-center z-10 gap-2">
-                <div className="flex flex-col -space-y-12 sm:-space-y-14">
+                <div className="flex flex-col -space-y-[60px] sm:-space-y-[80px]">
                     {getOpponentCards(gameState.game_players[3]).map(i => (
-                        <div key={i} className="transform rotate-90 scale-75">{renderCardBack()}</div>
+                        <div key={i} className="transform rotate-90 scale-75 shadow-sm">{renderCardBack()}</div>
                     ))}
                 </div>
                 <div className={`w-12 h-12 rounded-full border-2 ${getAvatarBorderColor(gameState.game_players[3])} bg-gray-400 overflow-hidden z-20 shadow-lg relative shrink-0`}>
