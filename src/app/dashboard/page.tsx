@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { Wallet, Joystick, ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { Wallet, Joystick, ArrowUpRight, ArrowDownLeft, BookOpen } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
@@ -12,17 +12,47 @@ export default async function DashboardPage() {
 
     if (!user) return null;
 
-    const { data: profile } = await supabase
+    let { data: profile } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .single();
 
-    const { data: wallet } = await supabase
+    if (!profile) {
+        // Self-healing: Create profile if missing
+        const { data: newProfile, error: profileError } = await supabase
+            .from("profiles")
+            .insert({
+                id: user.id,
+                username: user.user_metadata.full_name || user.email?.split("@")[0] || "Jogador",
+                avatar_url: user.user_metadata.avatar_url,
+            })
+            .select()
+            .single();
+
+        if (!profileError) profile = newProfile;
+    }
+
+    let { data: wallet } = await supabase
         .from("wallets")
         .select("*")
         .eq("user_id", user.id)
         .single();
+
+    if (!wallet) {
+        // Self-healing: Create wallet if missing
+        const { data: newWallet, error: walletError } = await supabase
+            .from("wallets")
+            .insert({
+                user_id: user.id,
+                balance: 0.00,
+                currency: 'EUR'
+            })
+            .select()
+            .single();
+
+        if (!walletError) wallet = newWallet;
+    }
 
     return (
         <div className="space-y-6">
@@ -87,6 +117,30 @@ export default async function DashboardPage() {
                         <div>
                             <h3 className="font-bold text-gray-900">Histórico</h3>
                             <p className="text-sm text-gray-500">Jogos e transações</p>
+                        </div>
+                    </div>
+                </Link>
+
+                <Link href="/dashboard/training" className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] border border-gray-100">
+                    <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 text-yellow-600 group-hover:bg-yellow-600 group-hover:text-white transition-colors">
+                            <Joystick className="h-6 w-6" />
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-gray-900">Treino (Bots)</h3>
+                            <p className="text-sm text-gray-500">Praticar sem apostar</p>
+                        </div>
+                    </div>
+                </Link>
+
+                <Link href="/dashboard/tutorial" className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] border border-gray-100">
+                    <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <BookOpen className="h-6 w-6" />
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-gray-900">Como Jogar</h3>
+                            <p className="text-sm text-gray-500">Regras e Dicas</p>
                         </div>
                     </div>
                 </Link>
