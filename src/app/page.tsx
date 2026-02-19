@@ -10,14 +10,14 @@ export default function Home() {
 
                 <div className="flex flex-col gap-4 w-full max-w-xs">
                     <Link
-                        href="/auth/login"
+                        href="/login"
                         className="w-full bg-white text-[#35654d] font-bold py-3 px-6 rounded-lg text-center hover:bg-gray-100 transition-colors shadow-lg"
                     >
                         Entrar
                     </Link>
 
                     <Link
-                        href="/auth/signup"
+                        href="/register"
                         className="w-full bg-transparent border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white/10 transition-colors"
                     >
                         Registar
