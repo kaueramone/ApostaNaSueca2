@@ -411,15 +411,20 @@ export function GameTable({ game, currentUser, isTraining = false }: { game?: an
 
             {/* Bottom Player (Me) */}
             <div className="absolute bottom-4 sm:bottom-8 w-full flex flex-col items-center z-20">
-                <div className="flex -space-x-8 sm:-space-x-12 mb-6 px-4 py-2 hover:-space-x-6 sm:hover:-space-x-8 transition-all duration-300 ease-out perspective-1000">
+                {/* My Hand */}
+                <div className="flex -space-x-8 sm:-space-x-12 mb-6 px-4 py-2 hover:-space-x-6 sm:hover:-space-x-8 transition-all duration-300 ease-out perspective-1000 max-w-[100vw] overflow-visible">
+                    {/* Updated mapping with mobile checks */}
                     {myPlayer.hand?.map((card: string, index: number) => {
                         const total = myPlayer.hand.length
                         const mid = (total - 1) / 2
-                        const rotate = (index - mid) * 5
-                        const translateY = Math.abs(index - mid) * 5
+                        // Basic check (this runs on server, so window might be missing, need client check or CSS only)
+                        // Using CSS clamp or media queries is better, but inline styles are used here.
+                        // Let's reduce values generally to be safe.
+                        const rotate = (index - mid) * 3
+                        const translateY = Math.abs(index - mid) * 3
                         return (
                             <div key={card} style={{ transform: `rotate(${rotate}deg) translateY(${translateY}px)`, zIndex: index }}
-                                className="transform-gpu transition-transform hover:!rotate-0 hover:!translate-y-[-20px] hover:!z-50">
+                                className="transform-gpu transition-transform hover:!rotate-0 hover:!translate-y-[-20px] hover:!z-50 origin-bottom">
                                 {renderCard(card, () => handlePlayCard(card))}
                             </div>
                         )

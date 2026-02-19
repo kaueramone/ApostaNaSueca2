@@ -34,6 +34,7 @@ export default function DepositPage() {
             setTimeout(() => {
                 setLoading(false)
                 setStep(3)
+                router.refresh() // Update server components (wallet balance)
                 setTimeout(() => {
                     router.push('/dashboard')
                 }, 2000)
