@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { signout } from "../auth/actions";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
+import { UserPresence } from "@/components/dashboard/user-presence";
 
 export const dynamic = 'force-dynamic';
 
@@ -24,6 +25,7 @@ export default async function DashboardLayout({
 
     return (
         <div className="flex h-screen bg-ios-gray6">
+            <UserPresence userId={user.id} email={user.email || ''} />
             <Sidebar userEmail={user.email} />
             <div className="flex flex-1 flex-col overflow-hidden">
                 {/* Mobile Header */}

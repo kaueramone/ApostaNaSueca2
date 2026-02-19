@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { Wallet, Joystick, ArrowUpRight, ArrowDownLeft, BookOpen } from "lucide-react";
+import { Wallet, Joystick, BookOpen } from "lucide-react";
+import { WalletOverview } from "@/components/dashboard/wallet-overview";
 
 export const dynamic = 'force-dynamic';
 
@@ -66,34 +67,7 @@ export default async function DashboardPage() {
             </div>
 
             {/* Wallet Card */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ios-blue to-ios-indigo p-6 text-white shadow-xl shadow-ios-blue/20">
-                <div className="relative z-10">
-                    <p className="text-sm font-medium opacity-80">Saldo Disponível</p>
-                    <p className="mt-2 text-4xl font-bold tracking-tight">
-                        €{wallet?.balance || "0.00"}
-                    </p>
-                </div>
-                <div className="mt-8 flex gap-3">
-                    <Link
-                        href="/dashboard/wallet/deposit"
-                        className="flex items-center gap-2 rounded-xl bg-white/20 px-4 py-2 text-sm font-semibold backdrop-blur-md transition-colors hover:bg-white/30"
-                    >
-                        <ArrowDownLeft className="h-4 w-4" />
-                        Depositar
-                    </Link>
-                    <Link
-                        href="/dashboard/wallet/withdraw"
-                        className="flex items-center gap-2 rounded-xl bg-white/20 px-4 py-2 text-sm font-semibold backdrop-blur-md transition-colors hover:bg-white/30"
-                    >
-                        <ArrowUpRight className="h-4 w-4" />
-                        Levantar
-                    </Link>
-                </div>
-
-                {/* Decorative circles */}
-                <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
-                <div className="absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-white/10 blur-xl" />
-            </div>
+            <WalletOverview initialBalance={wallet?.balance || 0} userId={user.id} />
 
             {/* Main Actions */}
             <div className="grid gap-4 md:grid-cols-2">
