@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Card } from '@/components/ui/card' // Assuming we have this or I'll use div
+// Card import removed
 import { Users, DollarSign, Activity, AlertCircle, TrendingUp, Shield } from 'lucide-react'
 import Link from 'next/link'
 
