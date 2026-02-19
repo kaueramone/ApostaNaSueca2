@@ -1,0 +1,87 @@
+'use client'
+
+import { useFormState } from 'react-dom'
+import Link from 'next/link'
+import { signup } from '@/app/auth/actions'
+import { SubmitButton } from '@/components/submit-button'
+
+const initialState = {
+    error: null as string | null,
+}
+
+export function RegisterForm() {
+    // @ts-ignore
+    const [state, formAction] = useFormState(signup, initialState)
+
+    return (
+        <form action={formAction} className="space-y-6">
+            <div>
+                <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700"
+                >
+                    Nome Completo
+                </label>
+                <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    required
+                    className="mt-1 block w-full rounded-lg border border-gray-300 bg-ios-gray6 px-4 py-3 text-gray-900 focus:border-ios-blue focus:outline-none focus:ring-ios-blue sm:text-sm transition-all"
+                    placeholder="João Silva"
+                />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                >
+                    Email
+                </label>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    className="mt-1 block w-full rounded-lg border border-gray-300 bg-ios-gray6 px-4 py-3 text-gray-900 focus:border-ios-blue focus:outline-none focus:ring-ios-blue sm:text-sm transition-all"
+                    placeholder="seu@email.com"
+                />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                >
+                    Password
+                </label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    className="mt-1 block w-full rounded-lg border border-gray-300 bg-ios-gray6 px-4 py-3 text-gray-900 focus:border-ios-blue focus:outline-none focus:ring-ios-blue sm:text-sm transition-all"
+                    placeholder="••••••••"
+                />
+            </div>
+
+            {state?.error && (
+                <div className="rounded-md bg-red-50 p-4">
+                    <div className="flex">
+                        <div className="ml-3">
+                            <h3 className="text-sm font-medium text-red-800">Erro</h3>
+                            <div className="mt-2 text-sm text-red-700">
+                                <p>{state.error}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <SubmitButton className="flex w-full justify-center rounded-xl bg-ios-blue px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-ios-blue/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ios-blue transition-all active:scale-[0.98]">
+                Criar Conta
+            </SubmitButton>
+        </form>
+    )
+}

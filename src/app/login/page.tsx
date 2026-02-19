@@ -1,0 +1,27 @@
+import Link from "next/link";
+import { LoginForm } from "@/components/auth/login-form";
+
+export default function LoginPage() {
+    return (
+        <div className="flex min-h-screen items-center justify-center bg-ios-gray6 p-4">
+            <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
+                <div className="mb-8 text-center">
+                    <h1 className="text-2xl font-bold text-gray-900">Bem-vindo de volta</h1>
+                    <p className="text-ios-gray">Inicie sessão na sua conta</p>
+                </div>
+
+                <LoginForm />
+
+                <p className="mt-8 text-center text-sm text-gray-500">
+                    Não tem conta?{" "}
+                    <Link
+                        href="/register"
+                        className="font-semibold text-ios-blue hover:text-ios-blue/80"
+                    >
+                        Registar
+                    </Link>
+                </p>
+            </div>
+        </div>
+    );
+}
